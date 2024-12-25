@@ -350,4 +350,4 @@ def accuracy_metrics(y_true, y_pred):
   return {'mae': mae.result().numpy(),
           'mse': mse.result().numpy(),
           'mape': mape.result().numpy(),
-          'rmse': tf.sqrt(mse.result().numpy())}
+          'rmse': tf.sqrt(mse.result()).numpy()}
