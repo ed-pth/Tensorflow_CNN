@@ -332,3 +332,22 @@ def calculate_results(y_true, y_pred):
                   "recall": model_recall,
                   "f1": model_f1}
   return model_results
+
+def accuracy_metrics(y_true, y_pred):
+
+  # SVARBU: make sure datatype is float32, which is preferred by TensorFlow (otherwise you may end with dtype error)
+  y_true = tf.cast(y_true, tf.float32)
+  y_pred = tf.cast(y_pred, tf.float32)
+
+  mae = tf.keras.metrics.MeanAbsoluteError()
+  mse = tf.keras.metrics.MeanSquaredError()
+  mape = tf.keras.metrics.MeanAbsolutePercentageError()
+
+  mae.update_state(y_true, y_pred)
+  mse.update_state(y_true, y_pred)
+  mape.update_state(y_true, y_pred)
+
+  return {'mae': mae.result().numpy(),
+          'mse': mse.result().numpy(),
+          'mape': mape.result().numpy(),
+          'rmse': tf.sqrt(mse.result().numpy())}
